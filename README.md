@@ -33,7 +33,7 @@ We are looking for enthusiastic individuals who are ready to mentor, learn, and 
 
 - **Through GitHub**: The best way to reach out is via Pull Requests or Issues right here on GitHub.
 
-- **Email**: Alternatively, you can email us at [APLInnovationLabEmail@example.com](mailto:APLInnovationLabEmail@example.com).
+- **Email**: Alternatively, you can email us at [bryce.benton@austintexas.gov](mailto:bryce.benton@austintexas.gov).
 
 ## Join Us
 

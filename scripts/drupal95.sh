@@ -49,38 +49,58 @@ fi
 # Start the DDEV environment
 echo "Starting DDEV..."
 ddev start
-composer config allow-plugins.composer/installers true
-ddev composer require composer/installers:"^1.9" -n
-ddev composer require drupal/core-composer-scaffold:"^9"
+
+# Initialize composer.json with basic project settings
+ddev composer init --description "APL Innovation Lab baseline project" --type "project" --stability stable --license "GPL-2.0-or-later" --no-interaction
+
+# Allow necessary plugins
+ddev composer config allow-plugins.composer/installers true
+ddev composer config allow-plugins.drupal/core-composer-scaffold true
+
+# Configure installer paths for Drupal components
+ddev composer config extra.installer-paths.html/core "type:drupal-core"
+ddev composer config extra.installer-paths.html/modules/contrib "type:drupal-module"
+ddev composer config extra.installer-paths.html/profiles/contrib "type:drupal-profile"
+ddev composer config extra.installer-paths.html/themes/contrib "type:drupal-theme"
+ddev composer config extra.installer-paths.html/drush/Commands/{$name} "type:drupal-drush"
+
+
+
+# Set Drupal scaffold directory
+ddev composer config extra.drupal-scaffold.locations.web-root 'html/'
+
+# Update composer configurations
+ddev composer update
+
+# Create a Drupal project with the specified version. Drupal will be installed in the 'html' directory as per installer-paths configuration
+echo "Creating Drupal project..."
+ddev composer require -W "drupal/core-recommended:^$DRUPAL_VERSION"
+
+# Add Drupal core and necessary packages
+ddev composer require drupal/core-composer-scaffold:^9
+ddev composer require composer/installers:^1.9 -n
 
 # Require Drush using Composer
-ddev composer require "drush/drush:^10"
+ddev composer require "drush/drush:^11"
 
 # Restart DDEV to make sure it picks up the config settings
 ddev restart
 
-# Create a Drupal project with the specified version
-echo "Creating Drupal project..."
-ddev composer require -W "drupal/core-recommended:^$DRUPAL_VERSION"
-
-# Navigate back to the project directory
-cd "$PROJECT_DIR"
-
-# Create the 'html' subdirectory for Drupal installation
-mkdir -p html
-cd html
-
-# Install Drupal via Drush with predefined database credentials
+# Install Drupal via Drush with predefined database credentials. Assumes Drupal is in the 'html' directory.
 echo "Installing Drupal..."
+cd html
 ddev drush site:install standard \
   --db-url=mysql://db:db@db:3306/db \
   --site-name="$PROJECT_NAME" \
   --account-name=admin \
-  --account-pass=admin \
-  -y
-
+  --account-pass=111 -y
 
 # Provide information about accessing the site
 echo "DDEV environment setup complete. You can access your site with the following URL:"
 ddev describe
 ddev launch
+
+# Display a success message
+echo "----------------------------------------"
+echo "Setup complete!"
+echo "----------------------------------------"

@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Contains hi_how_are_you.module.
+ */
+
+use Drupal\node\Entity\Node;
+
+/**
+ * Creates a custom node.
+ */
+function hi_how_are_you_create_node() {
+  $node = Node::create([
+    'type' => 'page',
+    'title' => 'My Title',
+    'body' => [
+      'value' => 'My Body',
+      'format' => 'full_html',
+    ],
+  ]);
+  $node->save();
+}

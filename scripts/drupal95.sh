@@ -1,15 +1,12 @@
 #!/bin/bash
+GIT_ROOT="$(dirname "$(dirname "$0")")"
+cd "$GIT_ROOT" 
 
 # in case it isn't already, start colima
 # colima start
 
 # Script to set up a Drupal project with DDEV
-# Usage: ./setup-drupal.sh [project-name]
-
-# Check if a project name is provided as a parameter, otherwise use default
-#PROJECT_NAME=${1:-"my-drupal-project"}
-
-#!/bin/bash
+# Usage: ./drupal95.sh [project-name]
 
 # Find the Git project root directory
 PROJECT_ROOT=$(git rev-parse --show-toplevel)
@@ -17,10 +14,8 @@ PROJECT_ROOT=$(git rev-parse --show-toplevel)
 # Extract the name of the project directory to use as the default project name
 DEFAULT_PROJECT_NAME=$(basename "$PROJECT_ROOT")
 
-# Check if a project name is provided as a parameter, otherwise use the default
+# Check if a project name is provided as a parameter
 PROJECT_NAME=${1:-"$DEFAULT_PROJECT_NAME"}
-
-
 
 # Define Drupal version and project directory
 DRUPAL_VERSION="9.5"
@@ -28,8 +23,18 @@ PROJECT_DIR="$HOME/$PROJECT_NAME"
 
 echo "Setting up project: $PROJECT_NAME in directory: $PROJECT_DIR"
 
-# Create the project directory and navigate into it
-mkdir -p "$PROJECT_DIR" && cd "$PROJECT_DIR" || {
+
+# Check if the provided project name is different from the default
+if [ "$PROJECT_NAME" != "$DEFAULT_PROJECT_NAME" ]; then
+    # Define the new directory path
+    NEW_DIR_PATH="$PROJECT_DIR"
+
+    # Create the new directory
+    mkdir -p "$NEW_DIR_PATH"
+
+fi
+# Navigate to the project directory
+cd "$PROJECT_DIR" || {
     echo "Failed to navigate to project directory. Exiting."
     exit 1
 }
@@ -114,9 +119,6 @@ ddev drush site:install standard \
 echo "DDEV environment setup complete. You can access your site with the following URL:"
 ddev describe
 ddev launch
-
-# restore the README.md from the project, instead of the new Drupal one
-git checkout HEAD -- README.md
 
 
 # Display a success message

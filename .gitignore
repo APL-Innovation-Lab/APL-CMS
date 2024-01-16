@@ -1,0 +1,27 @@
+# Custom .gitignore for Drupal project
+README.md
+
+# Ignore specific files and directories
+.csslintrc
+.ddev/
+.editorconfig
+.eslintignore
+.eslintrc.json
+.gitattributes
+.ht.router.php
+.htaccess
+INSTALL.txt
+autoload.php
+composer.json
+composer.lock
+core/
+example.gitignore
+index.php
+modules/
+profiles/
+robots.txt
+sites/
+themes/
+update.php
+vendor/
+web.config

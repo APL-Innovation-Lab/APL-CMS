@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# in case it isn't already, start colima
+# colima start
+
 # Script to set up a Drupal project with DDEV
 # Usage: ./setup-drupal.sh [project-name]
 
@@ -29,7 +32,6 @@ echo "Creating DDEV configuration..."
 cat <<EOT > config.yaml
 name: $PROJECT_NAME
 type: drupal9
-docroot: html
 php_version: "8.0"
 webserver_type: apache-fpm
 database:
@@ -58,16 +60,17 @@ ddev composer config allow-plugins.composer/installers true
 ddev composer config allow-plugins.drupal/core-composer-scaffold true
 
 # Configure installer paths for Drupal components
-ddev composer config extra.installer-paths.html/core "type:drupal-core"
-ddev composer config extra.installer-paths.html/modules/contrib "type:drupal-module"
-ddev composer config extra.installer-paths.html/profiles/contrib "type:drupal-profile"
-ddev composer config extra.installer-paths.html/themes/contrib "type:drupal-theme"
-ddev composer config extra.installer-paths.html/drush/Commands/{$name} "type:drupal-drush"
+#ddev composer config extra.installer-paths.html/core "type:drupal-core"
+
+# composer config extra.installer-paths.html/modules/contrib '{"$name": ["type:drupal-module"]}'
+# composer config extra.installer-paths.html/profiles/contrib '{"$name": ["type:drupal-profile"]}'
+# composer config extra.installer-paths.html/themes/contrib '{"$name": ["type:drupal-theme"]}'
+# composer config extra.installer-paths.html/drush/Commands/{$name} '["type:drupal-drush"]'
 
 
 
 # Set Drupal scaffold directory
-ddev composer config extra.drupal-scaffold.locations.web-root 'html/'
+#ddev composer config extra.drupal-scaffold.locations.web-root 'html/'
 
 # Update composer configurations
 ddev composer update

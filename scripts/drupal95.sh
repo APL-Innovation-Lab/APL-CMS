@@ -132,7 +132,6 @@ ddev drush hhay-cn
 
 
 # Provide information about accessing the site
-echo "DDEV environment setup complete. You can access your site with the following URL:"
 ddev describe
 ddev launch
 

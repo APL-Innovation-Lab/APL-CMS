@@ -2,8 +2,8 @@
 GIT_ROOT="$(dirname "$(dirname "$0")")"
 cd "$GIT_ROOT" 
 
-# in case it isn't already, start colima
-# colima start
+# In case it isn't already, start colima
+colima start
 
 # Script to set up a Drupal project with DDEV
 # Usage: ./drupal95.sh [project-name]
@@ -77,19 +77,6 @@ ddev composer init --description "APL Innovation Lab baseline project" --type "p
 ddev composer config allow-plugins.composer/installers true
 ddev composer config allow-plugins.drupal/core-composer-scaffold true
 
-# Configure installer paths for Drupal components
-#ddev composer config extra.installer-paths.html/core "type:drupal-core"
-
-# composer config extra.installer-paths.html/modules/contrib '{"$name": ["type:drupal-module"]}'
-# composer config extra.installer-paths.html/profiles/contrib '{"$name": ["type:drupal-profile"]}'
-# composer config extra.installer-paths.html/themes/contrib '{"$name": ["type:drupal-theme"]}'
-# composer config extra.installer-paths.html/drush/Commands/{$name} '["type:drupal-drush"]'
-
-
-
-# Set Drupal scaffold directory
-#ddev composer config extra.drupal-scaffold.locations.web-root 'html/'
-
 # Update composer configurations
 ddev composer update
 
@@ -151,6 +138,6 @@ ddev launch
 
 
 # Display a success message
-echo "----------------------------------------"
-echo "Setup complete!"
-echo "----------------------------------------"
+echo "--~~~~~~~~~~~~~~~----------~~~~~~~~~~~~~~~~~~~~~~~---"
+echo "True love will find you in the end. --Daniel Johnston"
+echo "---~~~~~~~~~~~-------~~~~~~~~~~~~~~~~----~~~~~~~~~~~-"

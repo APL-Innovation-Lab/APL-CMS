@@ -115,6 +115,35 @@ ddev drush site:install standard \
   --account-name=admin \
   --account-pass=111 -y
 
+# Path to the custom module directory in the repository
+CUSTOM_MODULE_SRC="${PROJECT_ROOT}/scripts/modules/custom"
+
+# Path to the custom module directory in the Drupal installation
+CUSTOM_MODULE_DEST="${PROJECT_DIR}/modules/custom"
+
+echo "Copying from: $CUSTOM_MODULE_SRC/hi_how_are_you"
+echo "Copying to: $CUSTOM_MODULE_DEST"
+
+# Create the custom module directory if it doesn't exist
+mkdir -p "$CUSTOM_MODULE_DEST"
+
+# Check if the source directory exists
+if [ -d "$CUSTOM_MODULE_SRC/hi_how_are_you" ]; then
+    echo "Source directory found. Proceeding with copy."
+    # Copy the custom module to the Drupal installation
+    cp -r "$CUSTOM_MODULE_SRC/hi_how_are_you" "$CUSTOM_MODULE_DEST"
+else
+    echo "Source directory not found. Check the path: $CUSTOM_MODULE_SRC/hi_how_are_you"
+fi
+
+
+# Enable the custom module
+ddev drush en hi_how_are_you -y
+
+# Run the custom Drush command
+ddev drush hhay-cn
+
+
 # Provide information about accessing the site
 echo "DDEV environment setup complete. You can access your site with the following URL:"
 ddev describe

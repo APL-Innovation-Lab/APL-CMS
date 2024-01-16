@@ -13,11 +13,14 @@ use Drupal\node\Entity\Node;
 function hi_how_are_you_create_node() {
   $node = Node::create([
     'type' => 'page',
-    'title' => 'My Title',
+    'title' => 'Hi!',
     'body' => [
-      'value' => 'My Body',
+      'value' => '..how are you?',
       'format' => 'full_html',
     ],
   ]);
   $node->save();
+
+  // Return the Node ID.
+  return $node->id();
 }

@@ -6,8 +6,8 @@ This documentation provides an overview of the bash script used for setting up a
 
 The script performs the following actions:
 
-1. **Checks for CLI Parameter**: If a project name is provided as a command-line argument, it uses that name; otherwise, it defaults to "my-drupal-project".
-2. **Creates Project Directory**: It creates a directory for the project in the user's home directory.
+1. **Checks for CLI Parameter**: If a project name is provided as a command-line argument, it uses that name; otherwise, it defaults to the name of the project's directory.
+2. **Creates Project Directory**: If a project name is provided, it creates a directory for the project in the user's home directory.
 3. **Navigates to Project Directory**: The script then navigates into the project directory.
 4. **Creates .ddev Directory and Config**: Inside the project directory, a `.ddev` folder is created, and a `config.yaml` file is set up for DDEV configuration.
 5. **Checks for Config Creation**: The script verifies if the `config.yaml` was successfully created.

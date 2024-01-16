@@ -7,7 +7,20 @@
 # Usage: ./setup-drupal.sh [project-name]
 
 # Check if a project name is provided as a parameter, otherwise use default
-PROJECT_NAME=${1:-"my-drupal-project"}
+#PROJECT_NAME=${1:-"my-drupal-project"}
+
+#!/bin/bash
+
+# Find the Git project root directory
+PROJECT_ROOT=$(git rev-parse --show-toplevel)
+
+# Extract the name of the project directory to use as the default project name
+DEFAULT_PROJECT_NAME=$(basename "$PROJECT_ROOT")
+
+# Check if a project name is provided as a parameter, otherwise use the default
+PROJECT_NAME=${1:-"$DEFAULT_PROJECT_NAME"}
+
+
 
 # Define Drupal version and project directory
 DRUPAL_VERSION="9.5"
@@ -87,11 +100,10 @@ ddev composer require composer/installers:^1.9 -n
 ddev composer require "drush/drush:^11"
 
 # Restart DDEV to make sure it picks up the config settings
-ddev restart
+#ddev restart
 
 # Install Drupal via Drush with predefined database credentials. Assumes Drupal is in the 'html' directory.
 echo "Installing Drupal..."
-cd html
 ddev drush site:install standard \
   --db-url=mysql://db:db@db:3306/db \
   --site-name="$PROJECT_NAME" \
@@ -102,6 +114,10 @@ ddev drush site:install standard \
 echo "DDEV environment setup complete. You can access your site with the following URL:"
 ddev describe
 ddev launch
+
+# restore the README.md from the project, instead of the new Drupal one
+git checkout HEAD -- README.md
+
 
 # Display a success message
 echo "----------------------------------------"

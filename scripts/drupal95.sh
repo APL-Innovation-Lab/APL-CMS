@@ -66,6 +66,9 @@ if [[ ! -f .ddev/config.yaml ]]; then
     exit 1
 fi
 
+# Write the volume mount configuration to the .ddev/config.yaml file
+#echo -e "  extra_host_volume_mounts:\n    - source: ${CUSTOM_MODULES_PATH}\n      target: /var/www/html/modules/custom" >> .ddev/config.yaml
+
 # Start the DDEV environment
 echo "Starting DDEV..."
 ddev start
@@ -91,6 +94,9 @@ ddev composer require composer/installers:^1.9 -n
 # Require Drush using Composer
 ddev composer require "drush/drush:^11"
 
+#ddev composer config repositories.local path /var/www/html/modules/custom
+
+
 # Restart DDEV to make sure it picks up the config settings
 #ddev restart
 
@@ -102,33 +108,23 @@ ddev drush site:install standard \
   --account-name=admin \
   --account-pass=111 -y
 
-# Path to the custom module directory in the repository
-CUSTOM_MODULE_SRC="${PROJECT_ROOT}/scripts/modules/custom"
+#ddev composer require hi_how_are_you
+#echo -e "  extra_host_volume_mounts:\n    - source: ${CUSTOM_MODULES_PATH}\n      target: /var/www/html/modules/custom" >> .ddev/config.yaml
 
-# Path to the custom module directory in the Drupal installation
-CUSTOM_MODULE_DEST="${PROJECT_DIR}/modules/custom"
+# Define paths
 
-echo "Copying from: $CUSTOM_MODULE_SRC"
-echo "Copying to: $CUSTOM_MODULE_DEST"
+# Get the absolute path of the custom modules directory
+CUSTOM_MODULES_PATH="$(cd "${PROJECT_ROOT}/scripts/modules/custom" && pwd)"
 
-# Create the custom module directory if it doesn't exist
-mkdir -p "$CUSTOM_MODULE_DEST"
+REPO_MODULES_PATH="$(cd "${PROJECT_ROOT}/scripts/modules/custom" && pwd)"
+DRUPAL_MODULES_PATH="$PROJECT_DIR/modules" 
 
-# Check if the source directory exists
-if [ -d "$CUSTOM_MODULE_SRC" ]; then
-    echo "Source directory found. Proceeding with copy."
-    # Copy the custom module to the Drupal installation
-    cp -r "$CUSTOM_MODULE_SRC" "$CUSTOM_MODULE_DEST"
-else
-    echo "Source directory not found. Check the path: $CUSTOM_MODULE_SRC"
-fi
+mkdir -p $DRUPAL_MODULES_PATH/custom
 
+# Copy custom modules
+cp -r $REPO_MODULES_PATH/* $DRUPAL_MODULES_PATH/custom/
 
-# Enable the custom module
-ddev drush cr
-ddev drush en hi_how_are_you -y
-
-# Run the custom Drush command
+ddev drush en hi_how_are_you
 ddev drush hhay-cn
 
 
@@ -141,3 +137,4 @@ ddev launch
 echo "--~~~~~~~~~~~~~~~----------~~~~~~~~~~~~~~~~~~~~~~~---"
 echo "True love will find you in the end. --Daniel Johnston"
 echo "---~~~~~~~~~~~-------~~~~~~~~~~~~~~~~----~~~~~~~~~~~-"
+ddev drush en hi_how_are_you -y

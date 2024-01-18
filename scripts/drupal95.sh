@@ -66,9 +66,6 @@ if [[ ! -f .ddev/config.yaml ]]; then
     exit 1
 fi
 
-# Write the volume mount configuration to the .ddev/config.yaml file
-#echo -e "  extra_host_volume_mounts:\n    - source: ${CUSTOM_MODULES_PATH}\n      target: /var/www/html/modules/custom" >> .ddev/config.yaml
-
 # Start the DDEV environment
 echo "Starting DDEV..."
 ddev start
@@ -94,11 +91,6 @@ ddev composer require composer/installers:^1.9 -n
 # Require Drush using Composer
 ddev composer require "drush/drush:^11"
 
-#ddev composer config repositories.local path /var/www/html/modules/custom
-
-
-# Restart DDEV to make sure it picks up the config settings
-#ddev restart
 
 # Install Drupal via Drush with predefined database credentials. Assumes Drupal is in the 'html' directory.
 echo "Installing Drupal..."
@@ -108,8 +100,6 @@ ddev drush site:install standard \
   --account-name=admin \
   --account-pass=111 -y
 
-#ddev composer require hi_how_are_you
-#echo -e "  extra_host_volume_mounts:\n    - source: ${CUSTOM_MODULES_PATH}\n      target: /var/www/html/modules/custom" >> .ddev/config.yaml
 
 # Define paths
 
@@ -137,4 +127,3 @@ ddev launch
 echo "--~~~~~~~~~~~~~~~----------~~~~~~~~~~~~~~~~~~~~~~~---"
 echo "True love will find you in the end. --Daniel Johnston"
 echo "---~~~~~~~~~~~-------~~~~~~~~~~~~~~~~----~~~~~~~~~~~-"
-ddev drush en hi_how_are_you -y

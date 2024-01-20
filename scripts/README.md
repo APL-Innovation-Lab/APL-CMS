@@ -1,9 +1,17 @@
-# Project Goals and Potential Pursuits
+# Enhancing library.austintexas.gov: A Collaborative Journey
 
-## Introduction
-This document outlines the goals and potential projects for enhancing the user experience (UX) of the library.austintexas.gov site. The APL Innovation Lab is actively seeking members and outside contributors to use this site as the canonical source for reference. The ultimate aim is to ensure that the UX improvements significantly inform and contribute to the site's ongoing progress.
+## Welcome to Our Mission
+Welcome to an exciting venture where your creativity and expertise can shape the future of the library.austintexas.gov site. Here at the APL Innovation Lab, we're not just enhancing a website; we're reimagining the way people interact with digital libraries. Our goal is ambitious yet simple: to make this site a beacon of reference and a testament to outstanding user experience (UX).
 
-## Goals and Potential Projects
+We believe that the best ideas come from collaboration. That's why we're opening our doors to innovative minds, both within our community and beyond. Whether you're a seasoned expert or an enthusiastic novice, your contributions can drive the transformative change we envision for this platform.
+
+## The Vision Ahead
+Our journey is filled with potential projects and milestones aimed at elevating the UX of library.austintexas.gov. Each step we take is an opportunity to learn, grow, and create something truly remarkable. 
+
+Join us as we embark on this path of discovery and innovation. Together, we can build a digital library experience that is not only functional but also inspiring and engaging for every user.
+
+Let's turn this vision into reality!
+
 1. **Systematic User Feedback Utilization**: Develop a method to systematically collect and version control user feedback, translating it into tangible UX improvements.
 
 2. **Dynamic Prototyping Development**: Establish a process for rapidly generating or adjusting design prototypes using version-controlled content.

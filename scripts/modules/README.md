@@ -22,9 +22,37 @@ To start tracking events like Accordion clicks, ensure that GTM is properly set 
 
 Identify your Accordion headers using unique CSS classes, IDs, or attributes. These will be used in GTM to recognize clicks.
 
-#### Step 3: Capture Clicks and Data
 
-In your trigger configuration, specify conditions using 'Click Classes', 'Click ID', or 'Click Element'.
+### Step 3: Capturing Accordion Clicks with a JavaScript Variable
+
+#### A. Define a JavaScript Variable in GTM
+1. **Go to Variables**: In your GTM dashboard, navigate to 'Variables'.
+2. **Create New User-Defined Variable**: Click 'New' to create a variable.
+3. **Variable Configuration**:
+   - Choose 'Custom JavaScript' as the variable type.
+   - Write a JavaScript function that returns a string combining the Accordion ID and the current page URL.
+
+#### B. JavaScript Function Example
+```javascript
+function() {
+  // Assuming each accordion has a unique ID attribute
+  var accordionId = event.target.id; // Replace with actual logic to capture the Accordion ID
+  var pageUrl = window.location.pathname; // Captures the URL path
+
+  // Combine both values with a separator, for example: 'PageURL | AccordionID'
+  return pageUrl + " | " + accordionId;
+}
+```
+This script assumes that when an Accordion is clicked, its ID can be captured from the event target. Adjust the script to match your Accordion's implementation details.
+
+#### C. Use This Variable in Your Event Tag
+- When setting up your GTM event tag (as described in previous steps), use this custom JavaScript variable for the 'Label' field.
+- This will send an event to Google Analytics with a label formatted as 'PageURL | AccordionID', allowing you to track both the specific Accordion and the page it was on.
+
+### Tips for Implementation
+- **Test Thoroughly**: Use GTM's preview mode to test the functionality. Ensure that the variable correctly captures the desired data when an Accordion is clicked.
+- **Consistency in ID Assignment**: Make sure each Accordion has a unique and consistent ID across all pages for accurate tracking.
+- **Privacy Compliance**: Ensure that the data captured and sent does not violate any user privacy regulations.
 
 #### Step 4: Create a Tag for Event Tracking
 

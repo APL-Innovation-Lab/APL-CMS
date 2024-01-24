@@ -1,97 +1,44 @@
+# Custom Modules for APL-CMS
 
-## README: Extending GTM for Event Tracking on Drupal Sites
+This section of the APL-CMS repository is dedicated to custom modules developed for our Drupal-based website. Custom modules allow us to extend the functionality of Drupal, tailoring it to meet our specific needs.
 
-This README serves as a guide for implementing extended event tracking using Google Tag Manager (GTM) on Drupal-based websites. It's particularly useful for tracking interactive elements like Accordions. The documentation includes essential steps and code snippets, enabling easy understanding and implementation.
+## Module Placement
+All custom modules should be placed in the `[core]/modules/custom` directory of your Drupal installation. This directory is reserved for modules that are not part of the Drupal core or contributed modules from the Drupal community. By placing custom modules in this directory, we ensure a clear separation between core, contributed, and custom functionalities.
 
-### Getting Started with Event Tracking in GTM
+## Enabling and Disabling Modules
 
-To start tracking events like Accordion clicks, ensure that GTM is properly set up on your site. If you're new to GTM, refer to [Google's GTM documentation](https://support.google.com/tagmanager/answer/6102821?hl=en) for initial setup instructions.
+### Using DDEV
+DDEV is a Docker-based development environment that simplifies the management of PHP applications like Drupal. To enable or disable modules using DDEV, follow these steps:
 
-### Tracking Accordion Clicks
+1. **Start DDEV**: Navigate to the root directory of your Drupal installation and start DDEV using `ddev start`.
 
-#### Step 1: Create a Click Trigger in GTM
+2. **SSH into the Container**: Access the container's shell by running `ddev ssh`.
 
-1. **Open GTM**: Navigate to your GTM dashboard.
-2. **New Trigger**: Click 'Triggers' > 'New'.
-3. **Configure Trigger**:
-   - Name the trigger (e.g., 'Accordion Click Trigger').
-   - Select 'Click' as trigger type.
-   - Choose either 'All Elements' or specify elements that represent Accordion headers.
+3. **Enable a Module**: To enable a module, use the Drush command `drush en [module_name]`. Replace `[module_name]` with the machine name of your module.
 
-#### Step 2: Identifying Accordion Elements
+4. **Disable a Module**: To disable a module, use the Drush command `drush pm-uninstall [module_name]`.
 
-Identify your Accordion headers using unique CSS classes, IDs, or attributes. These will be used in GTM to recognize clicks.
+5. **Exit the Container**: Once you have enabled or disabled your modules, you can exit the container shell by typing `exit`.
 
+### Using Drupal Admin Interface
+You can also enable or disable modules directly from the Drupal admin interface:
 
-### Step 3: Capturing Accordion Clicks with a JavaScript Variable
+1. **Access the Admin Panel**: Log into your Drupal site as an administrator.
 
-#### A. Define a JavaScript Variable in GTM
-1. **Go to Variables**: In your GTM dashboard, navigate to 'Variables'.
-2. **Create New User-Defined Variable**: Click 'New' to create a variable.
-3. **Variable Configuration**:
-   - Choose 'Custom JavaScript' as the variable type.
-   - Write a JavaScript function that returns a string combining the Accordion ID and the current page URL.
+2. **Navigate to Extend**: From the admin menu, navigate to `Manage` > `Extend`.
 
-#### B. JavaScript Function Example
-```javascript
-function() {
-  // Assuming each accordion has a unique ID attribute
-  var accordionId = event.target.id; // Replace with actual logic to capture the Accordion ID
-  var pageUrl = window.location.pathname; // Captures the URL path
+3. **Find Your Module**: Scroll through the list of modules or use the search functionality to find your custom module.
 
-  // Combine both values with a separator, for example: 'PageURL | AccordionID'
-  return pageUrl + " | " + accordionId;
-}
-```
-This script assumes that when an Accordion is clicked, its ID can be captured from the event target. Adjust the script to match your Accordion's implementation details.
+4. **Enable/Disable the Module**: 
+   - To enable, check the box next to your module and click the `Install` button at the bottom of the page.
+   - To disable, uncheck the box next to your module and click the `Uninstall` tab at the top of the page, then follow the prompts.
 
-#### C. Use This Variable in Your Event Tag
-- When setting up your GTM event tag (as described in previous steps), use this custom JavaScript variable for the 'Label' field.
-- This will send an event to Google Analytics with a label formatted as 'PageURL | AccordionID', allowing you to track both the specific Accordion and the page it was on.
+## Best Practices
+- Always test new modules or changes to existing modules in a development environment before deploying to production.
+- Keep documentation up-to-date for each custom module, including its purpose, configuration settings, and any dependencies.
+- Ensure that custom modules are compliant with Drupal coding standards and best practices.
 
-### Tips for Implementation
-- **Test Thoroughly**: Use GTM's preview mode to test the functionality. Ensure that the variable correctly captures the desired data when an Accordion is clicked.
-- **Consistency in ID Assignment**: Make sure each Accordion has a unique and consistent ID across all pages for accurate tracking.
-- **Privacy Compliance**: Ensure that the data captured and sent does not violate any user privacy regulations.
+## Support
+For assistance with custom modules or if you encounter any issues, please contact the development team.
 
-#### Step 4: Create a Tag for Event Tracking
-
-1. **New Tag**: In GTM, click 'Tags' > 'New'.
-2. **Tag Configuration**:
-   - Select 'Google Analytics: Universal Analytics' as the tag type.
-   - Set Track Type to 'Event'.
-   - Configure the Category (e.g., 'Accordion'), Action (e.g., 'Click'), and Label (use a dynamic variable like `{{Click Text}}`).
-
-#### Step 5: Including Page Context
-
-Include variables like 'Page Path' or 'Page Title' in the tag to track the source page of the click.
-
-#### Step 6: Testing and Deploying
-
-Use GTM's preview and debug mode to test the setup, then publish the changes once verified.
-
-### Code Snippets
-
-Here are essential code snippets for your reference:
-
-**GTM Tag Configuration:**
-
-```markdown
-Google Analytics Tag Type: Universal Analytics
-Tracking Type: Event
-Category: Accordion
-Action: Click
-Label: {{Click Text}} or Custom JS Variable for Accordion Title
-Google Analytics Settings: Your GA Settings Variable
-Trigger: Accordion Click Trigger
-```
-
-### Best Practices and Tips
-
-- Always test new configurations in a staging environment first.
-- Regularly check GTM and Google Analytics to ensure data is being captured accurately.
-- Respect user privacy and comply with data protection regulations.
-
-### Conclusion
-
-This guide provides a basic framework for extending event tracking using GTM on Drupal sites. Customizations may be necessary based on specific site configurations and requirements.
+Thank you for contributing to the APL-CMS project!
